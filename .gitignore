@@ -333,6 +333,11 @@ ASALocalRun/
 # SDL2 DLLs
 *.dll
 
+# sln and vcxproj 
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
 # MFractors (Xamarin productivity tool) working folder
 .mfractor/
 
