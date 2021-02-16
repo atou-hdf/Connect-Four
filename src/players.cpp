@@ -96,4 +96,3 @@ node Ai::heurFunction(Board& b, bool is_ai, int last_move) {
     bestPlay.value = ((is_ai) ? b.score(BLACK) : b.score(RED));
     return bestPlay;
 }
-
