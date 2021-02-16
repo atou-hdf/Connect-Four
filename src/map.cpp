@@ -152,9 +152,8 @@ void Map::aiMove(char piece)
 
     do
     {
-        //std::cout << "In map before alphabeta ! " << std::endl;
         move = ai.alphabeta(board,DEPTH,M_INF,P_INF,true, start);
-        std::cout << "playing : " << move.column << " with value : " << move.value << std::endl;
+        //std::cout << "playing : " << move.column << " with value : " << move.value << std::endl;
         incTurn(move.column);
 
     } while ( !board.make_move(move.column,RED) );

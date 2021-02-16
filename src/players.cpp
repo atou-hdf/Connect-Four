@@ -43,8 +43,6 @@ node Ai::alphabeta(Board& b, int depth, int alpha, int beta, bool is_ai, int las
                 b.make_move(col,RED);
                 node play = alphabeta(b,depth-1,alpha,beta,false, col);
                 int value = play.value;
-                if(depth == 6)
-                    std::cout << col << "****" << play.column << "  **************** with value : " << value << std::endl;
                 if ( value > best_value )
                 {
                     best_value = value;
@@ -76,8 +74,6 @@ node Ai::alphabeta(Board& b, int depth, int alpha, int beta, bool is_ai, int las
                 b.make_move(col,BLACK);
                 node play = alphabeta(b, depth - 1, alpha, beta, true, col);
                 int value = play.value;
-                if (depth == 6)
-                    std::cout << col << "****" << play.column << " **************** with value : " << value << std::endl;
                 if ( value < best_value )
                 {
                     best_value = value;

@@ -14,7 +14,6 @@ public:
     bool isfree() const { return free; };
     void setState(bool state);
     void updateOnClick(int *choice);
-    void updateOnHover();
 
 private:
     int xpos;

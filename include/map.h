@@ -12,16 +12,18 @@ class Map{
 public:
     Map();
     Map(int x, int y);
-    ~Map();
+    ~Map() {
+        SDL_DestroyTexture(red);
+        SDL_DestroyTexture(white);
+        SDL_DestroyTexture(black);
+    };
 
-    void loadMap(std::vector< std::vector<char> > l_map);
     void drawMap();
 
     void update();
     void aiMove(char piece);
     void playerMove(char piece);
     void gameMode(int choice);
-    void play();
     void incTurn(int move);
     int getWinner() { return winner; }
     void updateGameOver(int move);
