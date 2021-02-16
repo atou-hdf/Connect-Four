@@ -9,8 +9,21 @@ static const int COLS = 7;
 static const char RED = 'R';
 static const char BLACK = 'B';
 static const char EMPTY = ' ';
-static const int P_INF = 1000000;
-static const int M_INF= -1000000;
+static const int P_INF = 500000000;
+static const int M_INF= -500000000;
+
+typedef struct {
+    int column;
+    int value;
+}node;
+
+static const int val_board[ROWS][COLS] = { {3,4,5,7,5,4,3},
+                                           {4,6,8,10,8,6,4},
+                                           {5,8,11,13,11,8,5},
+                                           {5,8,11,13,11,8,5},
+                                           {4,6,8,10,8,6,4},
+                                           {3,4,5,7,5,4,3} };
+
 
 class Board
 {
@@ -38,8 +51,13 @@ class Board
         int vert_score( const std::vector<char>, char );
         int diag_right_score( const char piece );
         int diag_left_score( const char piece );
+        //
+        int eval(const char piece, int row, int col);
+        int getval(const char piece);
+        //
         int score( const char piece );
         void emptying(const int move, const int col);
+        
 
 };
 

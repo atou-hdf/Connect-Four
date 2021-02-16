@@ -49,9 +49,11 @@ bool Board::is_legal(const int col) const
   {
     if ( game_board[TOP_INDEX][col] == EMPTY )
     {
-      return true;
+        //std::cout << "in col"<< col<<" is legal" << std::endl;
+        return true;
     }
   }
+  //std::cout << "in col" << col << " is # not # legal" << endl;
   return false;
 }
 
@@ -65,6 +67,7 @@ bool Board::make_move(const int col, const char piece)
       if ( game_board[i][col] == EMPTY )
       {
         game_board[i][col] = piece;
+        //std::cout << "break game board in :( " << i << " , " << col<< " )" << endl;
         break;
       }
     }
@@ -334,6 +337,7 @@ int Board::horiz_score(const vector<char> temp_row, const char piece)
     window.at(2) = temp_row[static_cast<__int64>(col)+2];
     window.at(3) = temp_row[static_cast<__int64>(col)+3];
 
+
     score += evaluate_window( window, piece );
   }
   return score;
@@ -401,29 +405,25 @@ int Board::diag_right_score(const char piece)
 
 int Board::evaluate_window(const vector<char> window, const char piece)
 {
+  int defenceMod = 10;
   int score = 0;
   char opponent;
   if (piece == BLACK)
     opponent = RED;
   else
     opponent = BLACK;
-
-  if ( count(window.begin(),window.end(),piece) == 4 )
-    score += 1000;
-  if ( count(window.begin(),window.end(), piece) == 3 &&
-      count(window.begin(),window.end(), EMPTY) == 1 )
-    score += 10;
-  if ( count(window.begin(),window.end(), piece) == 2 &&
-      count(window.begin(),window.end(), EMPTY) == 2 )
-    score += 2;
-
-  if ( count(window.begin(),window.end(), opponent) == 3 &&
-      count(window.begin(),window.end(), EMPTY) == 1 )
-    score -= 900;
-  if ( count(window.begin(),window.end(), opponent) == 2 &&
-      count(window.begin(),window.end(), EMPTY) == 2 )
-    score -= 50;
-
+  if (count(window.begin(), window.end(), piece) == 3 &&
+      count(window.begin(), window.end(), EMPTY) == 1)
+      score += 1000;
+  if (count(window.begin(), window.end(), piece) == 2 &&
+      count(window.begin(), window.end(), EMPTY) == 2)
+      score += 100;
+  if (count(window.begin(), window.end(), opponent) == 3 &&
+      count(window.begin(), window.end(), EMPTY) == 1)
+      score -= 1020;
+  if (count(window.begin(), window.end(), opponent) == 2 &&
+      count(window.begin(), window.end(), EMPTY) == 2)
+      score -= 120;
   return score;
 }
 
@@ -462,3 +462,153 @@ int Board::score(const char piece)
 
   return score;
 }
+
+int Board::eval(const char piece, int row, int col)
+{
+    int score_eval = 0;
+
+    if (row == 0) {
+        for (int i = 0; i < 2; i++)
+        {
+            if (col == 0) {
+                for (int j = 0; j < 2; j++)
+                {
+                    if (game_board[static_cast<__int64>(row) + i][static_cast<__int64>(col) + j] == piece)
+                    {
+                        score_eval += val_board[row][col];
+                    }
+                }
+
+            }
+            else if (col == 6) {
+                for (int j = -1; j < 1; j++)
+                {
+                    if (game_board[static_cast<__int64>(row) + i][static_cast<__int64>(col) + j] == piece)
+                    {
+                        score_eval += val_board[row][col];
+                    }
+                }
+
+            }
+            else {
+                for (int j = -1; j < 2; j++)
+                {
+                    if (game_board[static_cast<__int64>(row) + i][static_cast<__int64>(col) + j] == piece)
+                    {
+                        score_eval += val_board[row][col];
+                    }
+                }
+
+            }
+        }
+    }
+    else if (row == 5) {
+        for (int i = -1; i < 1; i++)
+        {
+            if (col == 0) {
+                for (int j = 0; j < 2; j++)
+                {
+                    if (game_board[static_cast<__int64>(row) + i][static_cast<__int64>(col) + j] == piece)
+                    {
+                        score_eval += val_board[row][col];
+                    }
+                }
+
+            }
+            else if (col == 6) {
+                for (int j = -1; j < 1; j++)
+                {
+                    if (game_board[static_cast<__int64>(row) + i][static_cast<__int64>(col) + j] == piece)
+                    {
+                        score_eval += val_board[row][col];
+                    }
+                }
+
+            }
+            else {
+                for (int j = -1; j < 2; j++)
+                {
+                    if (game_board[static_cast<__int64>(row) + i][static_cast<__int64>(col) + j] == piece)
+                    {
+                        score_eval += val_board[row][col];
+                    }
+                }
+
+            }
+        }
+
+    }
+    else if (col == 0  && row != 0 && row != 5) {
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                if (game_board[static_cast<__int64>(row) + i][static_cast<__int64>(col) + j] == piece)
+                {
+                    score_eval += val_board[row][col];
+                }
+            }
+        }
+    }
+    else if (col == 5 && row != 0 && row != 5) {
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 1; j++)
+            {
+                if (game_board[static_cast<__int64>(row) + i][static_cast<__int64>(col) + j] == piece)
+                {
+                    score_eval += val_board[row][col];
+                }
+            }
+        }
+    }
+    else {
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                if (game_board[static_cast<__int64>(row) + i][static_cast<__int64>(col) + j] == piece)
+                {
+                    score_eval += val_board[row][col];
+                }
+            }
+        }
+
+    }
+    
+    return score_eval;
+
+}
+
+int Board::getval(const char piece)
+{
+    return 0;
+}
+/*
+int Board::score(const char piece)
+{
+
+    int score = 0;
+    char opponent;
+    if (piece == BLACK)
+        opponent = RED;
+    else
+        opponent = BLACK;
+
+    for (int row = 1; row < ROWS-1; row++)
+    {
+        for (int col = 1; col < COLS-1; col++)
+        {
+            if (game_board[row][col] == piece)
+            {
+                score += eval(piece, row, col);
+            }
+            else if (game_board[row][col] == opponent)
+            {
+                score -= 100 * eval(opponent, row, col);
+            }
+        }
+    }
+
+    return score;
+}*/

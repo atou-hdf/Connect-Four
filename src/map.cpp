@@ -138,18 +138,19 @@ void Map::playerMove(char piece)
 
 void Map::aiMove(char piece)
 {
-    int move = 0;
+    node move;
     int exp_alphabeta = 0;
     Ai cpu;
 
     do
     {
-        std::cout << "In map before alphabeta ! ";
-        cpu.alphabeta(board,4,M_INF,P_INF,true,move,&exp_alphabeta);
-        incTurn(move);
-        
-    } while ( !board.make_move(move,RED) );
-    updateGameOver(move);
+        //std::cout << "In map before alphabeta ! " << std::endl;
+        move = cpu.alphabeta(board,5,M_INF,P_INF,true,5,&exp_alphabeta);
+        std::cout << "playing : " << move.column << " with value : " << move.value << std::endl;
+        incTurn(move.column);
+
+    } while ( !board.make_move(move.column,RED) );
+    updateGameOver(move.column);
     
 
 }
@@ -168,7 +169,8 @@ bool Map::getGameOver()
 
 void Map::incTurn(int move)
 {
-    if(board.is_legal(move))
+    if (board.is_legal(move))
+        //std::cout << "Board is legal" << std::endl;
         turn++;
 }
 
