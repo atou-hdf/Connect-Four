@@ -118,6 +118,8 @@ void Game::handleEvents()
                     if( map->getTurn() == BTURN)
                     {
                         map->playerMove(BLACK);
+                        update();
+                        render();
                     }
                     break;
                 default :

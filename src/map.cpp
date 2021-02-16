@@ -140,12 +140,12 @@ void Map::aiMove(char piece)
 {
     node move;
     int exp_alphabeta = 0;
-    Ai cpu;
+    Ai ai;
 
     do
     {
         //std::cout << "In map before alphabeta ! " << std::endl;
-        move = cpu.alphabeta(board,5,M_INF,P_INF,true,5,&exp_alphabeta);
+        move = ai.alphabeta(board,5,M_INF,P_INF,true,5,&exp_alphabeta);
         std::cout << "playing : " << move.column << " with value : " << move.value << std::endl;
         incTurn(move.column);
 
