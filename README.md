@@ -1,2 +1,2 @@
-# Connect-Four-With-C-
-Game with C++ and SDL2
+# Connect Four
+* Connect four game developed with with C++ and SDL2
