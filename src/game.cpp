@@ -14,6 +14,7 @@ static const int RTURN = 1;
 // game winner : Red / Black
 static const int W_RED = 1;
 static const int W_BLACK = 2;
+static const int DRAW = 3;
 
 // define game objects
 GameObject* gameMenu;
@@ -23,6 +24,7 @@ GameObject* gameBoard;
 GameObject* red_piece;
 GameObject* black_wins;
 GameObject* red_wins;
+GameObject* draw;
 GameObject* black_turn;
 GameObject* red_turn;
 GameObject* exit_game;
@@ -79,6 +81,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     gameBoard = new GameObject("images/game.png", 0, 0, true);
     black_wins = new GameObject("images/black_wins.png", 0, 0, true);
     red_wins = new GameObject("images/red_wins.png", 0, 0, true);
+    draw = new GameObject("images/draw.png", 0, 0, true);
     black_turn = new GameObject("images/black_turn.png", 0, 0, true);
     red_turn = new GameObject("images/red_turn.png", 0, 0, true);
     exit_game = new GameObject("images/exit.png", 0, 0, true);
@@ -204,13 +207,21 @@ void Game::update()
             map->isfree();
             if(map->getWinner() == W_RED)
             {
-                red_wins->setState(false);
                 black_wins->setState(true);
+                red_wins->setState(false);
+                draw->setState(true);
             }
             else if(map->getWinner() == W_BLACK)
             {
-                red_wins->setState(true);
                 black_wins->setState(false);
+                red_wins->setState(true);
+                draw->setState(true);
+            }
+            else if (map->getWinner() == DRAW)
+            {
+                black_wins->setState(true);
+                red_wins->setState(true);
+                draw->setState(false);
             }
         }
     }
@@ -238,6 +249,7 @@ void Game::update()
             red_turn->setState(true);
             black_wins->update();
             red_wins->update();
+            draw->update();
         }
     }
 }
@@ -269,6 +281,7 @@ void Game::render()
         {
             black_wins->render();
             red_wins->render();
+            draw->render();
         }
     }
     //

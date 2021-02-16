@@ -8,7 +8,8 @@ private:
     char game_piece;
 public:
     Ai(){ game_piece = ' ';};                                              // BLACK ou RED
-    node alphabeta(Board& b, int depth, int alpha, int beta, bool is_ai, int last_move, int* exp_alphabeta);
+    node heurFunction(Board& b, bool is_ai, int last_move);
+    node alphabeta(Board& b, int depth, int alpha, int beta, bool is_ai, int last_move);
 };
 
 

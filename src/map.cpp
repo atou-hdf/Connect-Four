@@ -2,7 +2,7 @@
 #include "../include/textureManager.h"
 #include <vector>
 #include <Windows.h>
-#define DEPTH 4
+#define DEPTH 5
 
 
 int game_array_y[6] = { 164, 215, 267, 315, 366, 417};
@@ -138,14 +138,22 @@ void Map::playerMove(char piece)
 
 void Map::aiMove(char piece)
 {
+    int start = 0;
     node move;
-    int exp_alphabeta = 0;
     Ai ai;
+
+    for (int col = 0; col < COLS; col++)
+    {
+        if (board.is_legal(col)) {
+            start = col;
+            break;
+        }
+    }
 
     do
     {
         //std::cout << "In map before alphabeta ! " << std::endl;
-        move = ai.alphabeta(board,5,M_INF,P_INF,true,5,&exp_alphabeta);
+        move = ai.alphabeta(board,DEPTH,M_INF,P_INF,true, start);
         std::cout << "playing : " << move.column << " with value : " << move.value << std::endl;
         incTurn(move.column);
 
@@ -160,6 +168,21 @@ void Map::updateGameOver(int move)
     game_over = board.is_winner(move);
     if( game_over )
         winner = turn%2 + 1;
+    else {
+        int full = 0;
+        for (int i = 0; i < COLS; i++) {
+            if (!board.is_legal(i)) {
+                full++;
+            }
+            else {
+                break;
+            }
+        }
+        if (full == COLS) {
+            game_over = true;
+            winner = 3;
+        }
+    }
 }
 
 bool Map::getGameOver()
